@@ -2,19 +2,19 @@
 const candidates = [
     {
         id: 1,
-        name: "Ahmad Rizki",
+        name: "Damar",
         vision: "Mewujudkan OSIS yang aktif, kreatif, dan inovatif dengan meningkatkan kegiatan ekstrakurikuler dan memperkuat rasa kekeluargaan",
         image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80"
     },
     {
         id: 2,
-        name: "Siti Nurhaliza",
+        name: "Sunshine",
         vision: "Menciptakan lingkungan sekolah yang nyaman dan kondusif untuk belajar dengan program-program yang menyenangkan dan bermanfaat",
         image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80"
     },
     {
         id: 3,
-        name: "Budi Santoso",
+        name: "Ali",
         vision: "Memfokuskan pada pengembangan bakat siswa dan meningkatkan prestasi akademik maupun non-akademik sekolah",
         image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwa90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80"
     }
@@ -587,4 +587,5 @@ document.addEventListener('DOMContentLoaded', function() {
     if (studentsList) {
         renderStudentsList();
     }
+
 });
