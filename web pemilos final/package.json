@@ -1,0 +1,26 @@
+{
+  "name": "pemilihan-ketua-osis",
+  "version": "1.0.0",
+  "description": "Aplikasi Pemilihan Ketua OSIS Berbasis Web",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve",
+    "build": "echo 'No build process needed for static site'",
+    "test": "echo 'No tests specified'"
+  },
+  "keywords": [
+    "osis",
+    "pemilihan",
+    "voting",
+    "school",
+    "election"
+  ],
+  "author": "SMAN 1 KOTA MAGELANG",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.0"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}
