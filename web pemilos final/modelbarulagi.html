@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pemilihan Ketua OSIS</title>
+    <!-- Menambahkan library SheetJS (xlsx) untuk membaca file Excel -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Pemilihan Ketua OSIS</h1>
+        <p>SMAN 1 Contoh Kota</p>
+    </header>
+
+    <div class="container">
+        <!-- Halaman Login -->
+        <div id="login-page" class="page active">
+            <h2>Login untuk Memilih</h2>
+            <p>Masukkan kredensial Anda untuk melanjutkan</p>
+            <div class="form-group">
+                <label for="role">Login Sebagai</label>
+                <select id="role">
+                    <option value="student">Siswa</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div class="form-group" id="username-group" style="display: none;">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Masukkan username">
+            </div>
+            <div class="form-group" id="password-group" style="display: none;">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Masukkan password">
+            </div>
+            <div class="form-group" id="name-group">
+                <label for="name">Nama Lengkap</label>
+                <input type="text" id="name" placeholder="Masukkan nama lengkap">
+            </div>
+            <button id="login-btn">Login</button>
+        </div>
+
+        <!-- Halaman Daftar Kandidat (Siswa) -->
+        <div id="candidates-page" class="page">
+            <h2>Daftar Kandidat Ketua OSIS</h2>
+            <p>Pilih salah satu kandidat di bawah ini</p>
+            
+            <div class="candidates" id="candidates-list">
+                <!-- Kandidat akan diisi oleh JavaScript -->
+            </div>
+            
+            <div class="nav-buttons">
+                <button id="logout-student" class="button-secondary">Logout</button>
+            </div>
+        </div>
+
+        <!-- Halaman Konfirmasi Voting (Siswa) -->
+        <div id="voting-page" class="page">
+            <h2>Konfirmasi Pilihan Anda</h2>
+            
+            <div class="selected-candidate">
+                <img id="confirm-img" src="" alt="Kandidat" class="candidate-img">
+                <h3 id="confirm-name"></h3>
+                <p id="confirm-vision"></p>
+            </div>
+            
+            <p>Apakah Anda yakin memilih kandidat ini?</p>
+            <button id="confirm-vote">Ya, Saya Yakin</button>
+            <button id="change-choice" class="button-secondary">Ubah Pilihan</button>
+            
+            <div class="nav-buttons">
+                <button id="logout-voting" class="button-secondary">Logout</button>
+            </div>
+        </div>
+
+        <!-- Halaman Terima Kasih (Siswa) -->
+        <div id="thankyou-page" class="page">
+            <div class="thank-you">
+                <h2>Terima Kasih Telah Memilih!</h2>
+                <p>Suara Anda telah tercatat dan akan diperhitungkan dalam pemilihan ketua OSIS.</p>
+                <button id="back-to-login">Kembali ke Login</button>
+            </div>
+        </div>
+
+        <!-- Halaman Admin -->
+        <div id="admin-page" class="page">
+            <h2>Panel Admin - Hasil Pemilihan</h2>
+            <p>Berikut adalah hasil pemilihan ketua OSIS saat ini</p>
+            
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <h3>Total Pemilih</h3>
+                    <div class="stat-value" id="total-voters">0</div>
+                    <p>Jumlah siswa yang sudah memilih</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Siswa</h3>
+                    <div class="stat-value" id="total-students">0</div>
+                    <p>Jumlah siswa terdaftar</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Partisipasi</h3>
+                    <div class="stat-value" id="participation">0%</div>
+                    <p>Presentase partisipasi pemilih</p>
+                </div>
+            </div>
+            
+            <div class="admin-panel">
+                <h3>Perolehan Suara</h3>
+                <div class="results" id="admin-results-container">
+                    <!-- Hasil voting akan diisi oleh JavaScript -->
+                </div>
+            </div>
+
+            <!-- Kontrol Admin -->
+            <div class="admin-controls">
+                <h3 class="control-title">Kontrol Admin</h3>
+                <div class="nav-buttons">
+                    <button id="reset-votes" class="button-danger">Reset Hasil Voting</button>
+                    <button id="refresh-results" class="button-secondary">Refresh Hasil</button>
+                    <button id="manage-students" class="button-secondary">Kelola Data Siswa</button>
+                    <button id="logout-admin" class="button-secondary">Logout</button>
+                </div>
+            </div>
+
+            <!-- Manajemen Data Siswa -->
+            <div id="student-management" style="display: none; margin-top: 30px;">
+                <h3>Manajemen Data Siswa</h3>
+                <p>Tambahkan, edit, atau hapus data siswa yang dapat melakukan voting</p>
+                
+                <div class="form-group">
+                    <label for="new-name">Nama Lengkap</label>
+                    <input type="text" id="new-name" placeholder="Masukkan nama lengkap">
+                </div>
+                
+                <div class="form-group">
+                    <label for="new-class">Kelas</label>
+                    <input type="text" id="new-class" placeholder="Contoh: X IPA 1">
+                </div>
+                
+                <div class="nav-buttons">
+                    <button id="add-student" class="button-secondary">Tambah Siswa</button>
+                    <button id="generate-students" class="button-secondary">Generate Data Contoh</button>
+                </div>
+                
+                <!-- Bagian Import Excel -->
+                <div class="import-section">
+                    <h4>Import Data dari Excel</h4>
+                    <div class="import-info">
+                        <p><strong>Format file Excel yang didukung:</strong></p>
+                        <p>1. File harus berformat .xlsx atau .xls</p>
+                        <p>2. Kolom pertama harus berisi Nama Siswa</p>
+                        <p>3. Kolom kedua harus berisi Kelas</p>
+                        <p>4. Baris pertama diabaikan (header)</p>
+                    </div>
+                    
+                    <div class="file-input-container">
+                        <label class="file-input-label" for="excel-file">Pilih File Excel:</label>
+                        <input type="file" id="excel-file" accept=".xlsx, .xls">
+                    </div>
+                    
+                    <button id="import-excel" class="button-secondary">Import Data</button>
+                    
+                    <div class="template-download">
+                        <p>Unduh template Excel untuk memudahkan input data:</p>
+                        <button id="download-template" class="button-secondary">Download Template</button>
+                    </div>
+                </div>
+                
+                <table class="student-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama</th>
+                            <th>Kelas</th>
+                            <th>Status Voting</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="students-list">
+                        <!-- Daftar siswa akan diisi oleh JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
